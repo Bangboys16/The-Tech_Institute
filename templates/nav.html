@@ -1,0 +1,37 @@
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">THE TECH INSTITUTE </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item dropdown"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'course_list' %}">Courses</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'notifications' %}">
+                  Notifications
+                  {% if notification_count > 0 %}
+                    <span class="badge bg-danger">{{ notification_count }}</span>
+                  {% endif %}
+                </a>
+            </li>
+            
+            {% if request.user.is_authenticated %}
+
+                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' request.user.username %}">Dashboard</a></li> 
+                
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Log out</button>
+                </form>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Sign In</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4">
+    {% if messages %}
+       {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+       {% endfor %}
+    {% endif %}
+</div>
+
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <!-- Avatar Section -->
+                <div class="col-md-3 text-center mb-3 mb-md-0">
+                    <img src="{{ profile.get_avatar_url }}" alt="Avatar" class="img-thumbnail rounded-circle" width="150">
+                    <p class="mt-2 text-muted small">Joined: {{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+
+                <!-- User Info -->
+                <div class="col-md-9">
+                    <h2 class="fw-bold">Welcome, <span class="text-primary">{{ user.username|title }}</span>!</h2>
+                    <p><i class="bi bi-person-fill me-2"></i><strong>Name:</strong> {{ user.get_full_name|title }}</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i><strong>Email:</strong> {{ user.email }}</p>
+                    <p><i class="bi bi-info-circle-fill me-2"></i><strong>Bio:</strong> {{ profile.bio|default:"Not set yet" }}</p>
+                    <p><i class="bi bi-tools me-2"></i><strong>Skills:</strong> 
+                        {% if profile.skills %}
+                            <span class="badge bg-success">{{ profile.skills }}</span>
+                        {% else %}
+                            <span class="text-muted">Not provided</span>
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'edit_profile' request.user.username %}" class="btn btn-outline-primary mt-2">
+                        <i class="bi bi-pencil-square me-1"></i>Edit Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Courses Section -->
+            <h3 class="mb-3">Your Courses</h3>
+            <div class="row">
+                {% for course in enrolled_courses %}
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <p class="card-text text-muted">Progress: <strong>25%</strong> <!-- Placeholder --></p>
+                                <a href="{% url 'course_detail' course.slug %}" class="btn btn-sm btn-outline-secondary">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill"></i> You haven’t enrolled in any courses yet.
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

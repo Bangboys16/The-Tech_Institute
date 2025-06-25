@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% load socialaccount %}
+{% block content %}
+
+<div class="row">
+    <div class="col-11 col-md-4 mx-auto mt-5">
+        <h2>Sign Up</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        <div class="pt-3">
+            <small class="class-muted">Already have an account? <a href="{% url 'login' %}" class="ml-2">Sign In</a></small>
+        </div>
+
+        <hr>
+
+        <h3> OR </h3>
+
+        <div class="pt-3">
+            <small class="class-muted"> <a href="{% provider_login_url 'google' process='login' %}">Sign Up with Google</a></small>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

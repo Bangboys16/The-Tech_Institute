@@ -1,0 +1,20 @@
+<!-- techinstitute/templates/techinstitute/notifications.html -->
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mt-4">
+    <h2>Your Notifications</h2>
+    {% if user_notifications %}
+      <ul class="list-group">
+        {% for note in user_notifications %}
+          <li class="list-group-item {% if not note.is_read %}list-group-item-warning{% endif %}">
+            <a href="{{ note.url }}"><strong>{{ note.title }}</strong></a><br>
+            <small>{{ note.message }}</small><br>
+            <small class="text-muted">{{ note.created_at }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No notifications found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

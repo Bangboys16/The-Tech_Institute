@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="prompt" placeholder="Ask me anything..." required>
+    <button type="submit">Send</button>
+  </form>
+  
+  {% if reply %}
+    <div>
+      <strong>AI Reply:</strong> {{ reply }}
+    </div>
+  {% endif %}
+  
+  
+  
+{% endblock %}

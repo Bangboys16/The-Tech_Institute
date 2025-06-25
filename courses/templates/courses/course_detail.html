@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-info-circle mr-2"></i>{{ course.title }}
+                    </h4>
+                    <p class="lead">{{ course.description }}</p>
+                </div>
+                
+                {% if not is_enrolled %}
+                    <div class="card-body">
+                        <hr>
+                        <h5 class="text-success">Price: ₦{{ course.price }}</h5>
+                        <a href="{% url 'enroll_course' course.slug %}" class="btn btn-success btn-lg mt-3">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Enroll Now
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <small><i class="fas fa-lock mr-1"></i>Secure payment via Paystack</small>
+                    </div>
+                {% else %}
+                    <div class="card-body">
+                        <a href="{{ course.pdf_file.url }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </a>
+                    </div>
+                {% endif %}
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
